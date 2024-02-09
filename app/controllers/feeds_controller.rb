@@ -8,6 +8,7 @@ class FeedsController < ApplicationController
 
   # GET /feeds/1 or /feeds/1.json
   def show
+    @feed = Feed.find_by(id: params[:id])
   end
 
   # GET /feeds/new
@@ -56,10 +57,7 @@ class FeedsController < ApplicationController
       format.json { head :no_content }
     end
   end
-
-  def article
-  end
-
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_feed
