@@ -18,6 +18,7 @@ class FeedsController < ApplicationController
 
   # GET /feeds/1/edit
   def edit
+    @feed = Feed.find_by(id: params[:id])
   end
 
   # POST /feeds or /feeds.json
@@ -45,25 +46,28 @@ class FeedsController < ApplicationController
 
   # PATCH/PUT /feeds/1 or /feeds/1.json
   def update
-    respond_to do |format|
-      if @feed.update(feed_params)
-        format.html { redirect_to feed_url(@feed), notice: "Feed was successfully updated." }
-        format.json { render :show, status: :ok, location: @feed }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @feed.errors, status: :unprocessable_entity }
-      end
+    if @feed.update(feed_params)
+      redirect_to @feed, notice: 'Feed was successfully updated.'
+    else
+      render :edit
     end
+
+  #  respond_to do |format|
+  #    if @feed.update(feed_params)
+  #      format.html { redirect_to feed_url(@feed), notice: "Feed was successfully updated." }
+  #      format.json { render :show, status: :ok, location: @feed }
+  #    else
+  #      format.html { render :edit, status: :unprocessable_entity }
+  #      format.json { render json: @feed.errors, status: :unprocessable_entity }
+  #    end
+  #  end
   end
 
   # DELETE /feeds/1 or /feeds/1.json
   def destroy
+    @feed = Feed.find_by(id: params[:id])
     @feed.destroy
-
-    respond_to do |format|
-      format.html { redirect_to feeds_url, notice: "Feed was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to feeds_path
   end
   
   private
@@ -74,6 +78,6 @@ class FeedsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def feed_params
-      params.require(:feed).permit(:title)
+      params.require(:feed).permit(:title, :about, :content, :tag)
     end
 end
