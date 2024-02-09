@@ -22,17 +22,25 @@ class FeedsController < ApplicationController
 
   # POST /feeds or /feeds.json
   def create
-    @feed = Feed.new(feed_params)
+    @feed = Feed.new(
+      title: params[:title],
+      about: params[:about],
+      content: params[:content],
+      tag: params[:tag]
+    )
 
-    respond_to do |format|
-      if @feed.save
-        format.html { redirect_to feed_url(@feed), notice: "Feed was successfully created." }
-        format.json { render :show, status: :created, location: @feed }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @feed.errors, status: :unprocessable_entity }
-      end
-    end
+    @feed.save
+    redirect_to feeds_path
+
+  #  respond_to do |format|
+  #    if @feed.save
+  #      format.html { redirect_to feed_url(@feed), notice: "Feed was successfully created." }
+  #      format.json { render :show, status: :created, location: @feed }
+  #    else
+  #      format.html { render :new, status: :unprocessable_entity }
+  #      format.json { render json: @feed.errors, status: :unprocessable_entity }
+  #    end
+  #  end
   end
 
   # PATCH/PUT /feeds/1 or /feeds/1.json
