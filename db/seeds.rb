@@ -5,3 +5,16 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+Sample.create(
+  title: "サンプルタイトル1",
+  about: "このデータベースのサンプルデータです。",
+  content: "これはサンプルのコンテンツです。",
+  tag: "サンプル"
+)
+
+Sample.create(
+  title: "サンプルタイトル2",
+  about: "これもデータベースのサンプルデータです。",
+  content: "これはもう1つのサンプルのコンテンツです。",
+  tag: "テスト"
+)

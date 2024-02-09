@@ -8,6 +8,7 @@ class FeedsController < ApplicationController
 
   # GET /feeds/1 or /feeds/1.json
   def show
+    @feed = Feed.find_by(id: params[:id])
   end
 
   # GET /feeds/new
@@ -17,49 +18,58 @@ class FeedsController < ApplicationController
 
   # GET /feeds/1/edit
   def edit
+    @feed = Feed.find_by(id: params[:id])
   end
 
   # POST /feeds or /feeds.json
   def create
-    @feed = Feed.new(feed_params)
+    @feed = Feed.new(
+      title: params[:title],
+      about: params[:about],
+      content: params[:content],
+      tag: params[:tag]
+    )
 
-    respond_to do |format|
-      if @feed.save
-        format.html { redirect_to feed_url(@feed), notice: "Feed was successfully created." }
-        format.json { render :show, status: :created, location: @feed }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @feed.errors, status: :unprocessable_entity }
-      end
-    end
+    @feed.save
+    redirect_to feeds_path
+
+  #  respond_to do |format|
+  #    if @feed.save
+  #      format.html { redirect_to feed_url(@feed), notice: "Feed was successfully created." }
+  #      format.json { render :show, status: :created, location: @feed }
+  #    else
+  #      format.html { render :new, status: :unprocessable_entity }
+  #      format.json { render json: @feed.errors, status: :unprocessable_entity }
+  #    end
+  #  end
   end
 
   # PATCH/PUT /feeds/1 or /feeds/1.json
   def update
-    respond_to do |format|
-      if @feed.update(feed_params)
-        format.html { redirect_to feed_url(@feed), notice: "Feed was successfully updated." }
-        format.json { render :show, status: :ok, location: @feed }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @feed.errors, status: :unprocessable_entity }
-      end
+    if @feed.update(feed_params)
+      redirect_to @feed, notice: 'Feed was successfully updated.'
+    else
+      render :edit
     end
+
+  #  respond_to do |format|
+  #    if @feed.update(feed_params)
+  #      format.html { redirect_to feed_url(@feed), notice: "Feed was successfully updated." }
+  #      format.json { render :show, status: :ok, location: @feed }
+  #    else
+  #      format.html { render :edit, status: :unprocessable_entity }
+  #      format.json { render json: @feed.errors, status: :unprocessable_entity }
+  #    end
+  #  end
   end
 
   # DELETE /feeds/1 or /feeds/1.json
   def destroy
+    @feed = Feed.find_by(id: params[:id])
     @feed.destroy
-
-    respond_to do |format|
-      format.html { redirect_to feeds_url, notice: "Feed was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to feeds_path
   end
-
-  def article
-  end
-
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_feed
@@ -68,6 +78,6 @@ class FeedsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def feed_params
-      params.require(:feed).permit(:title)
+      params.require(:feed).permit(:title, :about, :content, :tag)
     end
 end
