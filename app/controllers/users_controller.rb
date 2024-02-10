@@ -20,6 +20,27 @@ class UsersController < ApplicationController
   def edit
   end
 
+  def login_form
+  end
+
+  def login
+    @user = User.find_by(
+      email: params[:email],
+      password: params[:password]
+    )
+    if @user
+      session[:user_id] = @user.id
+      redirect_to feeds_path
+    else
+      render("users/login_form")
+    end
+  end
+
+  def logout
+    session[:user_id] = nil
+    redirect_to("/login")
+  end
+
   # POST /users or /users.json
   def create
     @user = User.new(

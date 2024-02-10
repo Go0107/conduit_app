@@ -5,4 +5,7 @@ Rails.application.routes.draw do
   root 'feeds#index'
   # Defines the root path route ("/")
   # root "articles#index"
+  get "/login", to: "users#login_form"
+  post "/login", to: "users#login"
+  post "/logout", to: "users#logout"
 end
