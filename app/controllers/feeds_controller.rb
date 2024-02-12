@@ -9,6 +9,7 @@ class FeedsController < ApplicationController
   # GET /feeds/1 or /feeds/1.json
   def show
     @feed = Feed.find_by(id: params[:id])
+    @user = @feed.user
   end
 
   # GET /feeds/new
@@ -27,7 +28,8 @@ class FeedsController < ApplicationController
       title: params[:title],
       about: params[:about],
       content: params[:content],
-      tag: params[:tag]
+      tag: params[:tag],
+      user_id: @current_user.id
     )
 
     @feed.save
