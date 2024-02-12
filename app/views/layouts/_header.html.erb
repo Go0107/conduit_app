@@ -11,15 +11,13 @@
           <%= link_to("New Article", "/feeds/new", class: "nav-link") %>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/settings"> <i class="ion-gear-a"></i>&nbsp;Settings </a>
+          <%= link_to("Settings", "/users/#{@current_user.id}/edit", class: "nav-link") %>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/profile/eric-simons">
-            <%= @current_user.name %>
-          </a>
+          <%= link_to(@current_user.name, "/users/#{@current_user.id}", class: "nav-link") %>
         </li>
         <li class="nav-item">
-          <%= link_to("log out", "/logout", data: { "turbo-method": :post }) %>
+          <%= link_to "log out", "/logout", {method: "post"} %>
         </li>
       <% else %>
         <li class="nav-item">
