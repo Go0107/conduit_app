@@ -17,7 +17,7 @@
           <%= link_to(@current_user.name, "/users/#{@current_user.id}", class: "nav-link") %>
         </li>
         <li class="nav-item">
-          <%= link_to "log out", "/logout", {method: "post"} %>
+        <%= button_to("log out", "/logout", method: "post") %>
         </li>
       <% else %>
         <li class="nav-item">
